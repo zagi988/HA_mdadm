@@ -1,0 +1,1 @@
+DOMAIN = "mdadm_state"
