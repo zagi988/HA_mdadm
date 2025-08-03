@@ -1,56 +1,57 @@
 # RAID Status - Custom Component for Home Assistant
 
-Monitor the status of `mdadm` RAID devices in Home Assistant, with each RAID parameter exposed as a dedicated sensor entity.
+Monitor the status of `mdadm` RAID devices in Home Assistant, with each RAID parameter exposed as individual sensors grouped under a single RAID device.
 
 ## Requirements
 
-- `mdadm` installed on your server (for monitoring RAID)
-- Python packages: `mdstat`, `simplejson` (automatically required by this integration)
+- `mdadm` installed on your server (for RAID management)
+- Python packages: `mdstat`, `simplejson` (these are installed automatically with the integration)
 
-## How to Install
+## Installation
 
 ### Using HACS
 
 1. Go to **HACS → 3 dots → Custom Repositories**.
-2. Add your repository link and select "Integration" as the category.
-3. Search for **"RAID Status - MDADM"** under HACS Integrations and install it.
+2. Add the repository URL and select **Integration** as the category.
+3. Search for **RAID Status - MDADM** and install it.
 
 ### Manual Installation (without HACS)
 
 1. Download this repository.
-2. Copy the `custom_components/mdadm_state` folder into your Home Assistant `config/custom_components/` directory.
+2. Copy the folder `custom_components/mdadm_state` into your Home Assistant `config/custom_components/` directory.
 
-## YAML Configuration
+## Configuration via Home Assistant UI
 
-> You should configure **both** a `binary_sensor` (RAID state, on/off) and `sensor` entries (for all other RAID details):
+This integration supports UI configuration via the **Integrations** page. No manual YAML editing is required.
 
-```yaml
-# configuration.yaml example
-binary_sensor:
-  - platform: mdadm_state
-    device: md0        # Replace md0 with your actual RAID device name (e.g., md127)
-
-sensor:
-  - platform: mdadm_state
-    device: md0        # Same device as above, adds sensor entities for RAID status attributes
-```
-
-### Configuration Variables
-
-| Variable | Required | Description                          | Example    |
-|----------|----------|--------------------------------------|------------|
-| device   | Yes      | mdadm RAID device name (no `/dev/`)  | `md0`      |
-
-- For `/dev/md0`, use `device: md0`, for `/dev/md127` use `device: md127`, etc.
+1. Go to **Settings → Devices & Services → Add Integration**.
+2. Search for **RAID Status - MDADM**.
+3. Enter your RAID device name (e.g., `md0` for `/dev/md0`) when prompted.
+4. The integration will create:
+   - A **binary sensor** representing RAID state (on/off).
+   - Multiple **sensors** representing individual RAID attributes such as RAID type, disk count, sync status, resync progress, and more.
+5. All these entities will be grouped under a single **device** named like `RAID md0`.
 
 ## Entities Created
 
-- **Binary Sensor:** `binary_sensor.raid_dev_md0_state` (on/off)
-- **Sensors:** `sensor.raid_dev_md0_raid_type`, `sensor.raid_dev_md0_disks_number`, `sensor.raid_dev_md0_sync`, `sensor.raid_dev_md0_resync_speed`, and others, exposing all available RAID attributes.
+- **Device:** `RAID ` (e.g., `RAID md0`)
+- **Binary Sensor:** e.g., `binary_sensor.raid_md0_state` — indicating if RAID device is active (`on`/`off`).
+- **Sensors:** e.g., `sensor.raid_md0_raid_type`, `sensor.raid_md0_disks_number`, `sensor.raid_md0_sync`, `sensor.raid_md0_resync_speed`, etc., exposing detailed RAID status values.
 
-Each sensor has a unique ID for easy customization in Home Assistant’s UI.
+## Configuration Variables
 
-## Contributions
+| Variable | Required | Description                               | Example  |
+| -------- | -------- | ----------------------------------------- | -------- |
+| device   | Yes      | RAID device name (just the basename, no `/dev/` prefix) | `md0`     |
 
-- Uses [`mdstat`](https://pypi.org/project/mdstat/) for parsing Linux RAID status.
-- Uses [`simplejson`](https://pypi.org/project/simplejson/) for efficient JSON parsing.
+## Notes
+
+- The integration periodically polls local RAID status using the `mdstat` Python library.
+- Unique IDs are assigned for each entity, allowing you to customize, rename, or disable them via the Home Assistant UI.
+- Entities are grouped in a device for easier management.
+- No YAML configuration is required after installation; integration config is fully UI-driven.
+
+## Contributions & Libraries Used
+
+- [`mdstat`](https://pypi.org/project/mdstat/) — parsing Linux RAID status.
+- [`simplejson`](https://pypi.org/project/simplejson/) — JSON encoding and decoding.
