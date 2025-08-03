@@ -1,12 +1,16 @@
 {
     "domain": "mdadm_state",
-    "name": "MDADM Raid Status",
+    "name": "RAID Status - MDADM",
+    "version": "2.0.0",
     "documentation": "https://github.com/LorenzoVasi/HA_mdadm",
-    "issue_tracker": "https://github.com/LorenzoVasi/HA_mdadm/issues",
-    "codeowners": ["@LorenzoVasi"],
+    "requirements": [
+      "mdstat",
+      "simplejson"
+    ],
     "dependencies": [],
-    "codeowners": [],
-    "requirements": ["mdstat==1.0.4", "simplejson==3.17.2"],
-    "iot_class": "local_push",
-    "version": "0.1.0"
-}
+    "codeowners": ["@LorenzoVasi"],
+    "config_flow": true,
+    "iot_class": "local_poll",
+    "domains": ["sensor", "binary_sensor"]
+  }
+  
