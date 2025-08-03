@@ -1,16 +1,17 @@
 {
     "domain": "mdadm_state",
     "name": "RAID Status - MDADM",
-    "version": "2.0.0",
-    "documentation": "https://github.com/LorenzoVasi/HA_mdadm",
+    "version": "3.0.0",
+    "documentation": "https://github.com/zagi988/HA_mdadm",
     "requirements": [
       "mdstat",
       "simplejson"
     ],
     "dependencies": [],
-    "codeowners": ["@LorenzoVasi"],
+    "codeowners": ["@zagi988"],
     "config_flow": true,
     "iot_class": "local_poll",
     "domains": ["sensor", "binary_sensor"]
   }
   
+
