@@ -5,11 +5,12 @@
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/zagi988/HA_mdadm",
-  "issue_tracker": "https://github.com/zagi988/HA_mdadm/issues",
   "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/zagi988/HA_mdadm/issues",
   "requirements": [
     "mdstat",
     "simplejson"
   ],
   "version": "1.2.0"
 }
+
