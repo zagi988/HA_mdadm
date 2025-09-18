@@ -1,17 +1,13 @@
 import logging
 import mdstat
-import homeassistant.helpers.config_validation as cv
 import simplejson as json
 from types import SimpleNamespace
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
-
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "mdadm_state"
-
-CONFIG_SCHEMA = cv.config_entry_only_config_schema
 
 def parse_progress(progress_str):
     """Parse progress string like '45%' into float 45.0."""
